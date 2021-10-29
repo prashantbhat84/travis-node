@@ -1,3 +1,4 @@
+sudo: required
 language: node__js
 node__js: 
     - "14"
@@ -9,9 +10,19 @@ cache:
     - node_modules
 services:
   - docker
-
-script:
+before_install:
   - docker build -t $DOCKER_USERNAME/node_auth:$TRAVIS_BUILD_NUMBER .
+script:
+  - docker run  $DOCKER_USERNAME/node_auth:$TRAVIS_BUILD_NUMBER 
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESS_KEY_ID
+  secret_access_key: $ACCESS_SECRET_KEY
+  region: "us-west-2"
+  app: "test-node"
+  env: "Testnode-env"
+  bucket_name: "elasticbeanstalk-us-west-2-280433523617"
+
 after_success:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push $DOCKER_USERNAME/node_auth:$TRAVIS_BUILD_NUMBER
