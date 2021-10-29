@@ -1,9 +1,7 @@
 language: node__js
 node__js: 
     - "14",
-branches:
-    only:
-      - master
+
 cache:
   directories:
     - node_modules
