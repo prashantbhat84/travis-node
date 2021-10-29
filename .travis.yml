@@ -10,6 +10,6 @@ services:
 script:
   - docker build -t $DOCKER_USERNAME/node_auth:$TRAVIS_BUILD_NUMBER .
 after_success:
-  - docker login -u $DOCKER_USERNAME -P $DOCKER_PASSWORD
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push $DOCKER_USERNAME/node_auth:$TRAVIS_BUILD_NUMBER
 
